@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liman PDA Hesaplama Portalı | UAB 2026-2027 Tarifesi</title>
+    <title>Liman PDA Hesaplama Portalı | UAB Tarifesi</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,245 +13,282 @@
             .no-print { display: none !important; }
             .print-only { display: block !important; }
             body { background: white; color: black; padding: 0; }
-            .card-print { border: 1px solid #e2e8f0; box-shadow: none !important; border-radius: 8px; }
+            .card-print { border: 1px solid #cbd5e1; box-shadow: none !important; border-radius: 8px; }
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen pb-12 antialiased">
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-16 antialiased">
 
-    <!-- Navbar / Header -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30">
                     ⚓
                 </div>
                 <div>
-                    <h1 class="text-base font-bold text-white tracking-tight">PORT DISBURSEMENT ACCOUNT (PDA)</h1>
-                    <p class="text-xs text-indigo-400 font-medium">UAB Güncel Tavan Tarifesi & Yönerge Esaslı</p>
+                    <h1 class="text-base font-bold text-white tracking-tight">PORT DISBURSEMENT ACCOUNT (PDA) HESAPLAYICI</h1>
+                    <p class="text-xs text-indigo-400 font-medium">UAB Güngün Resmi Tarifeleri & Yönerge Esaslı</p>
                 </div>
             </div>
             <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 flex items-center space-x-2 transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                <span>Yazdır / PDF Kaydet</span>
+                <span>Yazdır / PDF İndir</span>
             </button>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            <!-- GİRDİ FORMU (SOL KOLON) -->
-            <div class="lg:col-span-6 space-y-6 no-print">
-                
-                <!-- Gemi & Sefer Parametreleri -->
-                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 backdrop-blur-xl shadow-xl">
-                    <div class="flex items-center justify-between mb-5 border-b border-slate-700/60 pb-3">
-                        <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
-                            <span>🚢</span> Gemi & Sefer Bilgileri
-                        </h2>
-                        <span class="text-[10px] bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2 py-0.5 rounded-full font-semibold">1 ŞUB 2026 - 31 OCA 2027</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+
+        <!-- 1. ÜST KISIM: GEMİ VE SEFER BİLGİLERİ FORMU -->
+        <section class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-xl shadow-2xl no-print">
+            <div class="flex items-center justify-between mb-5 border-b border-slate-700/60 pb-3">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                    <span>📋</span> Gemi ve Sefer Bilgileri
+                </h2>
+                <span class="text-[10px] bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-full font-semibold">1 ŞUBAT 2026 - 31 OCAK 2027 TARİFESİ</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Gemi Adı -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Adı</label>
+                    <input type="text" id="vesselName" value="MV MARMARA EXPRESS" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                </div>
+
+                <!-- IMO No -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">IMO No</label>
+                    <input type="text" id="imoNo" value="9123456" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                </div>
+
+                <!-- Gros Tonaj (GT) -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gros Tonaj (GT/GRT)</label>
+                    <input type="number" id="grt" value="8500" min="1" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-indigo-300 focus:outline-none focus:border-indigo-500 transition-colors">
+                </div>
+
+                <!-- Bayrak -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Bayrak Statüsü</label>
+                    <select id="flagType" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                        <option value="foreign">Yabancı Bayrak</option>
+                        <option value="turkish">Türk Bayrak</option>
+                    </select>
+                </div>
+
+                <!-- Sefer Türü -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Sefer Türü</label>
+                    <select id="voyageType" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                        <option value="intl">Yurtdışı (Uluslararası Sefer)</option>
+                        <option value="cabotage">Kabotaj Hattı</option>
+                    </select>
+                </div>
+
+                <!-- Tehlikeli Yük Durumu -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Tehlikeli Yük Durumu</label>
+                    <select id="dangerousCargo" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                        <option value="no">Hayır (Standart Yük)</option>
+                        <option value="yes">Evet (Tehlikeli Yük / IMDG / Tanker)</option>
+                    </select>
+                </div>
+
+                <!-- Gemi Tipi -->
+                <div class="sm:col-span-2 lg:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Tipi (Tarife Kategorisi)</label>
+                    <select id="vesselCategory" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                        <option value="other">Diğer Gemiler (Kuru Yük, Genel Kargo, Tanker, Dökme vb.)</option>
+                        <option value="container">Konteyner Gemisi</option>
+                        <option value="roro">Yolcu, RO-PAX, RO-RO, Araba Taşıyıcı Gemi</option>
+                    </select>
+                </div>
+
+                <!-- USD / TRY Döviz Kuru -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">USD / TRY Döviz Kuru</label>
+                    <input type="number" id="usdRate" value="38.50" step="0.1" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-emerald-400 focus:outline-none focus:border-indigo-500 transition-colors">
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ORTA KISIM: HİZMET KALEMLERİ VE GİRİŞ/ÇIKIŞ ADETLERİ -->
+        <section class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-xl shadow-2xl space-y-6 no-print">
+            <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                    <span>⚙️</span> Hizmet Kalemleri ve Operasyon Adetleri
+                </h2>
+                <span class="text-xs text-slate-400">Giriş ve Çıkış Adetlerini Ayrı Ayrı Giriniz</span>
+            </div>
+
+            <div class="space-y-4">
+
+                <!-- A) BARINMA HİZMETİ (GÜN SAYISI GİRİŞİ) -->
+                <div class="p-4 bg-emerald-950/20 border border-emerald-500/30 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="enableBerthing" checked onchange="calculatePDA()" class="w-5 h-5 accent-emerald-500 rounded cursor-pointer">
+                        <div>
+                            <span class="text-sm font-bold text-emerald-400 block">Günlük Barınma Hizmeti (Kıyı Tesisleri Yönergesi)</span>
+                            <span class="text-xs text-slate-400">UAB Günlük Barınma Tavan Ücretleri Tablosu esas alınarak hesaplanır.</span>
+                        </div>
                     </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Adı</label>
-                            <input type="text" id="vesselName" value="MV MARMARA EXPRESS" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
-                        </div>
-
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gros Tonaj (GT)</label>
-                            <input type="number" id="grt" value="8500" min="1" oninput="calculatePDA()" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-indigo-300 focus:outline-none focus:border-indigo-500 transition-colors">
-                        </div>
-
-                        <div class="col-span-2">
-                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Tipi & Hizmet Kategorisi</label>
-                            <select id="vesselCategory" onchange="onCategoryChange()" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
-                                <option value="other">Diğer Gemiler (Kuru Yük, Genel Kargo, Tanker vb.)</option>
-                                <option value="container">Konteyner Gemileri</option>
-                                <option value="roro">Yolcu, RO-PAX, RO-RO, Araba Taşıyıcı Gemi</option>
-                                <option value="cabotage">Kabotaj Hattında Çalışan Gemiler</option>
-                            </select>
-                        </div>
-
-                        <div class="col-span-2">
-                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Bayrak & Sefer Statüsü (Barınma İçin)</label>
-                            <select id="berthingStatus" onchange="calculatePDA()" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
-                                <option value="foreign_intl">Uluslararası Sefer - Yabancı Bayrak (Tam Tarife)</option>
-                                <option value="turkish_intl">Uluslararası Sefer - Türk Bayrak (%25 İndirimli)</option>
-                                <option value="cabotage">Kabotaj Hattında Çalışan Gemi (%50 İndirimli)</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Limanda Kalış (GÜN)</label>
-                            <input type="number" id="stayDays" value="2" min="1" step="1" oninput="calculatePDA()" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-emerald-400 focus:outline-none focus:border-indigo-500 transition-colors">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">USD / TRY Döviz Kuru</label>
-                            <input type="number" id="usdRate" value="38.50" step="0.1" oninput="calculatePDA()" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors">
-                        </div>
+                    <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+                        <label class="text-xs font-semibold text-slate-300 whitespace-nowrap">Kalış Gün Sayısı:</label>
+                        <input type="number" id="stayDays" value="2" min="1" step="1" oninput="calculatePDA()" class="w-24 bg-slate-900 border border-emerald-500/50 rounded-lg p-2 text-sm font-bold text-center text-emerald-300 focus:outline-none">
                     </div>
                 </div>
 
-                <!-- Hizmet Seçimleri ve Yönerge Sürşarj Kuralları -->
-                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 backdrop-blur-xl shadow-xl space-y-4">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-700/60 pb-3 flex items-center gap-2">
-                        <span>⚙️</span> Hizmet Kalemleri ve Yönerge Şartları
-                    </h2>
-
-                    <!-- Barınma -->
-                    <div class="p-3.5 bg-emerald-950/30 border border-emerald-500/20 rounded-xl flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-emerald-400 block">Günlük Barınma Hizmeti</span>
-                            <span class="text-[11px] text-slate-400">Günlük Barınma Tavan Ücretleri Tablosu esas alınır.</span>
-                        </div>
-                        <input type="checkbox" id="enableBerthing" checked onchange="calculatePDA()" class="w-4 h-4 accent-emerald-500 rounded cursor-pointer">
-                    </div>
+                <!-- B) DİĞER HİZMETLER (GİRİŞ / ÇIKIŞ ADETLİ) -->
+                <div class="bg-slate-900/60 border border-slate-700/60 rounded-xl p-4 space-y-4">
+                    <h3 class="text-xs font-bold uppercase text-slate-300 tracking-wider border-b border-slate-800 pb-2">Kılavuzluk, Römorkör ve Palamar Operasyonları</h3>
 
                     <!-- Kılavuzluk -->
-                    <div class="p-3.5 bg-slate-900/60 border border-slate-700/60 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-200">Kılavuzluk Hizmeti</span>
+                    <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
                             <input type="checkbox" id="enablePilotage" checked onchange="calculatePDA()" class="w-4 h-4 accent-indigo-500 rounded cursor-pointer">
+                            <span class="text-xs font-bold text-slate-200">Kılavuzluk Hizmeti</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-3 text-xs">
-                            <div>
-                                <label class="block text-slate-400 mb-1">Operasyon Sayısı</label>
-                                <select id="pilotOperations" onchange="calculatePDA()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white">
-                                    <option value="2">Giriş + Çıkış (2 Operasyon)</option>
-                                    <option value="1">Tek Yön (1 Operasyon)</option>
-                                    <option value="3">Giriş + Şift + Çıkış (3 Operasyon)</option>
-                                </select>
+                        <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
+                            <div class="flex items-center gap-2">
+                                <label class="text-[11px] text-slate-400">Giriş Adet:</label>
+                                <input type="number" id="pilotIn" value="1" min="0" oninput="calculatePDA()" class="w-16 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-center font-bold text-white">
                             </div>
-                            <div>
-                                <label class="block text-slate-400 mb-1">Tehlikeli Yük Durumu</label>
-                                <select id="dangerousCargo" onchange="calculatePDA()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white">
-                                    <option value="no">Tehlikeli Yük Yok (%0 Zam)</option>
-                                    <option value="yes">Tehlikeli Yük Var (Yönerge Zammı)</option>
-                                </select>
+                            <div class="flex items-center gap-2">
+                                <label class="text-[11px] text-slate-400">Çıkış Adet:</label>
+                                <input type="number" id="pilotOut" value="1" min="0" oninput="calculatePDA()" class="w-16 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-center font-bold text-white">
                             </div>
-                        </div>
-                        <div class="text-[11px] text-amber-400/90 bg-amber-500/10 border border-amber-500/20 p-2 rounded-lg font-medium" id="surchargeBadge">
-                            ⓘ Normal Gemilerde tehlikeli yük <b>%30</b>, Ro-Ro/Ro-Pax/Yolcu gemilerinde <b>%20</b> zamlı uygulanır.
                         </div>
                     </div>
 
                     <!-- Römorkör -->
-                    <div class="p-3.5 bg-slate-900/60 border border-slate-700/60 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-200">Römorkörcülük Hizmeti</span>
+                    <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
                             <input type="checkbox" id="enableTug" checked onchange="calculatePDA()" class="w-4 h-4 accent-indigo-500 rounded cursor-pointer">
+                            <span class="text-xs font-bold text-slate-200">Römorkörcülük Hizmeti</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-3 text-xs">
-                            <div>
-                                <label class="block text-slate-400 mb-1">Römorkör Sayısı (Her Hareket)</label>
-                                <input type="number" id="tugCount" value="2" min="0" max="6" oninput="calculatePDA()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                        <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
+                            <div class="flex items-center gap-2">
+                                <label class="text-[11px] text-slate-400">Giriş Römorkör Adedi:</label>
+                                <input type="number" id="tugIn" value="2" min="0" oninput="calculatePDA()" class="w-16 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-center font-bold text-white">
                             </div>
-                            <div>
-                                <label class="block text-slate-400 mb-1">Toplam Hareket Sayısı</label>
-                                <input type="number" id="tugMoves" value="2" min="1" oninput="calculatePDA()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white">
+                            <div class="flex items-center gap-2">
+                                <label class="text-[11px] text-slate-400">Çıkış Römorkör Adedi:</label>
+                                <input type="number" id="tugOut" value="2" min="0" oninput="calculatePDA()" class="w-16 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-center font-bold text-white">
                             </div>
                         </div>
                     </div>
 
                     <!-- Palamar -->
-                    <div class="p-3.5 bg-slate-900/60 border border-slate-700/60 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-200">Palamar Hizmeti (Mooring)</span>
+                    <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
                             <input type="checkbox" id="enableMooring" checked onchange="calculatePDA()" class="w-4 h-4 accent-indigo-500 rounded cursor-pointer">
+                            <span class="text-xs font-bold text-slate-200">Palamar Hizmeti (Mooring)</span>
                         </div>
-                        <div class="text-xs">
-                            <label class="block text-slate-400 mb-1">Hizmet Tipi</label>
-                            <select id="mooringType" onchange="calculatePDA()" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white">
-                                <option value="2">Bağlama + Çözme (2 Operasyon)</option>
-                                <option value="1">Tek Yön Operasyon</option>
-                            </select>
+                        <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
+                            <div class="flex items-center gap-2">
+                                <label class="text-[11px] text-slate-400">Giriş (Bağlama):</label>
+                                <input type="number" id="mooringIn" value="1" min="0" oninput="calculatePDA()" class="w-16 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-center font-bold text-white">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <label class="text-[11px] text-slate-400">Çıkış (Çözme):</label>
+                                <input type="number" id="mooringOut" value="1" min="0" oninput="calculatePDA()" class="w-16 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-center font-bold text-white">
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
             </div>
+        </section>
 
-            <!-- PDA ÖZETİ & PROFORMA FATURA KARTI (SAĞ KOLON) -->
-            <div class="lg:col-span-6">
-                <div class="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl card-print sticky top-20">
-                    
-                    <!-- Proforma Başlık -->
-                    <div class="border-b border-slate-200 pb-5 mb-5 text-center">
-                        <div class="inline-block bg-indigo-50 text-indigo-700 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
-                            PROFORMA DISBURSEMENT ACCOUNT
-                        </div>
-                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">LİMAN MASRAF MÜZAKERE FORMU</h3>
-                        <p class="text-xs text-slate-500 font-medium mt-1" id="pdaDate"></p>
-                    </div>
+        <!-- 3. ALT KISIM: PROFORMA FATURA (PDA) ÖZETİ VE TOPLAMLAR -->
+        <section class="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl card-print">
+            
+            <!-- Fatura Başlığı -->
+            <div class="border-b border-slate-200 pb-5 mb-5 text-center">
+                <div class="inline-block bg-indigo-50 text-indigo-700 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+                    PROFORMA DISBURSEMENT ACCOUNT
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tight">LİMAN MASRAF MÜZAKERE FORMU</h3>
+                <p class="text-xs text-slate-500 font-medium mt-1" id="pdaDate"></p>
+            </div>
 
-                    <!-- Gemi Özet Bilgi Şeridi -->
-                    <div class="grid grid-cols-3 gap-3 bg-slate-50 border border-slate-200/80 p-3.5 rounded-xl text-xs mb-6">
-                        <div>
-                            <span class="text-slate-400 text-[10px] uppercase font-bold block">Gemi Adı</span>
-                            <strong class="text-slate-900 text-sm" id="dispVesselName">-</strong>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 text-[10px] uppercase font-bold block">Gros Tonaj</span>
-                            <strong class="text-slate-900 text-sm" id="dispGRT">-</strong> GT
-                        </div>
-                        <div>
-                            <span class="text-slate-400 text-[10px] uppercase font-bold block">Süre / Statü</span>
-                            <strong class="text-slate-900 text-sm" id="dispDays">-</strong> Gün
-                        </div>
-                    </div>
-
-                    <!-- Kalemler Tablosu -->
-                    <div class="overflow-x-auto mb-6">
-                        <table class="w-full text-xs text-left">
-                            <thead>
-                                <tr class="bg-slate-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200">
-                                    <th class="p-3 rounded-l-lg">Hizmet Açıklaması</th>
-                                    <th class="p-3 text-center">Miktar x Birim Fiyat</th>
-                                    <th class="p-3 text-right rounded-r-lg">Tutar (USD)</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-100 font-medium text-slate-700" id="pdaTableBody">
-                                <!-- JS dinamik içerik -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Toplam Fatura Alanı -->
-                    <div class="border-t-2 border-slate-900 pt-4 space-y-2.5">
-                        <div class="flex justify-between text-xs font-semibold text-slate-600">
-                            <span>Hizmetler Ara Toplamı (USD):</span>
-                            <span class="font-bold text-slate-900" id="subTotalUSD">$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-xs font-semibold text-slate-600">
-                            <span>Liman Ajanlık / Fuzuli Liman Harçları (%5):</span>
-                            <span class="font-bold text-slate-900" id="agencyFeeUSD">$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-lg font-black text-slate-900 border-t border-slate-200 pt-3">
-                            <span>GENEL TOPLAM (USD):</span>
-                            <span id="grandTotalUSD" class="text-2xl text-emerald-600">$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-xs font-bold text-slate-500 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                            <span>Tahmini TL Karşılığı (TCMB Kur: <span id="dispRate">38.50</span> TL):</span>
-                            <span id="grandTotalTRY" class="text-slate-900">₺0.00</span>
-                        </div>
-                    </div>
-
-                    <!-- Resmi Alt Dipnot -->
-                    <div class="mt-6 text-[10px] text-slate-400 border-t border-slate-100 pt-3 leading-relaxed">
-                        * T.C. Ulaştırma ve Altyapı Bakanlığı Denizcilik Genel Müdürlüğü’nün 1 Şubat 2026 – 31 Ocak 2027 Kılavuzluk, Römorkörcülük ve Palamar Hizmetleri Ücret Tavan Tarifesi ile Kıyı Tesisleri Barınma Yönergesi hükümlerine tam uygun olarak proforma amaçlı hesaplanmıştır.
-                    </div>
-
+            <!-- Gemi Özet Bilgi Şeridi -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-xs mb-6">
+                <div>
+                    <span class="text-slate-400 text-[10px] uppercase font-bold block">Gemi Adı</span>
+                    <strong class="text-slate-900 text-xs sm:text-sm" id="dispVesselName">-</strong>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[10px] uppercase font-bold block">IMO No</span>
+                    <strong class="text-slate-900 text-xs sm:text-sm" id="dispIMO">-</strong>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[10px] uppercase font-bold block">Gros Tonaj</span>
+                    <strong class="text-slate-900 text-xs sm:text-sm" id="dispGRT">-</strong> GT
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[10px] uppercase font-bold block">Bayrak / Sefer</span>
+                    <strong class="text-slate-900 text-xs sm:text-sm" id="dispFlagVoyage">-</strong>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[10px] uppercase font-bold block">Tehlikeli Yük</span>
+                    <strong class="text-slate-900 text-xs sm:text-sm" id="dispDangerous">-</strong>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[10px] uppercase font-bold block">Kalış Süresi</span>
+                    <strong class="text-slate-900 text-xs sm:text-sm" id="dispDays">-</strong> Gün
                 </div>
             </div>
 
-        </div>
+            <!-- Kalemler Tablosu -->
+            <div class="overflow-x-auto mb-6">
+                <table class="w-full text-xs text-left">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200">
+                            <th class="p-3 rounded-l-lg">Hizmet Kalemi</th>
+                            <th class="p-3 text-center">Hesap Esası</th>
+                            <th class="p-3 text-center">Miktar x Birim Fiyat</th>
+                            <th class="p-3 text-right rounded-r-lg">Tutar (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700" id="pdaTableBody">
+                        <!-- JS dinamik içerik -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EN ALT KISIM: TOPLAMLAR -->
+            <div class="border-t-2 border-slate-900 pt-5 space-y-3">
+                <div class="flex justify-between text-xs font-semibold text-slate-600">
+                    <span>Hizmetler Ara Toplamı (USD):</span>
+                    <span class="font-bold text-slate-900 text-sm" id="subTotalUSD">$0.00</span>
+                </div>
+                <div class="flex justify-between text-xs font-semibold text-slate-600">
+                    <span>Liman Ajanlık / Fuzuli Harçlar (Tahmini %5):</span>
+                    <span class="font-bold text-slate-900 text-sm" id="agencyFeeUSD">$0.00</span>
+                </div>
+                <div class="flex justify-between text-lg font-black text-slate-900 border-t border-slate-200 pt-3">
+                    <span>GENEL TOPLAM (USD):</span>
+                    <span id="grandTotalUSD" class="text-2xl text-emerald-600">$0.00</span>
+                </div>
+                <div class="flex justify-between text-xs font-bold text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span>Tahmini TL Karşılığı (TCMB Kur: <span id="dispRate">38.50</span> TL):</span>
+                    <span id="grandTotalTRY" class="text-slate-900 text-sm font-extrabold">₺0.00</span>
+                </div>
+            </div>
+
+            <!-- Dipnot -->
+            <div class="mt-6 text-[10px] text-slate-400 border-t border-slate-100 pt-3 leading-relaxed">
+                * Bu proforma masraf hesaplaması T.C. Ulaştırma ve Altyapı Bakanlığı Denizcilik Genel Müdürlüğü’nün 1 Şubat 2026 – 31 Ocak 2027 Kılavuzluk, Römorkör, Palamar Tavan Ücret Tarifesi ile Kıyı Tesislerinde Gemilerin Barınma Ücretleri Yönergesi hükümlerine uygun olarak düzenlenmiştir.
+            </div>
+
+        </section>
+
     </main>
 
-    <!-- SCRIPT VE HESAPLAMA MANTIĞI -->
+    <!-- HESAPLAMA SCRIPT MANTIĞI -->
     <script>
         document.getElementById('pdaDate').innerText = 'Tarih: ' + new Date().toLocaleDateString('tr-TR');
 
@@ -277,19 +314,8 @@
             }
         };
 
-        function onCategoryChange() {
-            const category = document.getElementById('vesselCategory').value;
-            const badge = document.getElementById('surchargeBadge');
-            if (category === 'roro') {
-                badge.innerHTML = 'ⓘ <b>Ro-Ro / Ro-Pax / Yolcu Gemisi:</b> Yönerge uyarınca tehlikeli yük zammı <b>%20</b> ($1.20$) uygulanır.';
-            } else {
-                badge.innerHTML = 'ⓘ <b>Standart / Diğer Gemiler:</b> Yönerge uyarınca tehlikeli yük zammı <b>%30</b> ($1.30$) uygulanır.';
-            }
-            calculatePDA();
-        }
-
-        // GÜNLÜK BARINMA TAVAN ÜCRETİ HESABI
-        function getDailyBerthingFee(grt, status) {
+        // BARINMA GÜNLÜK ÜCRET HESABI
+        function getDailyBerthingFee(grt, flag, voyage) {
             let baseUSD = 0;
             if (grt <= 500) {
                 baseUSD = 10;
@@ -298,28 +324,35 @@
                 baseUSD = thousandKesir * 25;
             }
 
-            if (status === 'foreign_intl') {
-                return baseUSD;
-            } else if (status === 'turkish_intl') {
-                return Math.ceil(baseUSD * 0.75);
-            } else if (status === 'cabotage') {
-                return Math.ceil(baseUSD * 0.50);
+            if (voyage === 'cabotage') {
+                return Math.ceil(baseUSD * 0.50); // Kabotaj %50 indirimli
+            } else if (flag === 'turkish') {
+                return Math.ceil(baseUSD * 0.75); // Uluslararası Türk Bayrak %25 indirimli
+            } else {
+                return baseUSD; // Uluslararası Yabancı Bayrak Tam
             }
-            return baseUSD;
         }
 
         function calculatePDA() {
+            // Form Değerleri
+            const vesselName = document.getElementById('vesselName').value || '-';
+            const imoNo = document.getElementById('imoNo').value || '-';
             const grt = parseFloat(document.getElementById('grt').value) || 0;
-            const days = parseFloat(document.getElementById('stayDays').value) || 0;
-            const rate = parseFloat(document.getElementById('usdRate').value) || 1;
-            const category = document.getElementById('vesselCategory').value;
-            const berthingStatus = document.getElementById('berthingStatus').value;
+            const flag = document.getElementById('flagType').value;
+            const voyage = document.getElementById('voyageType').value;
             const isDangerous = document.getElementById('dangerousCargo').value === 'yes';
-            const vesselName = document.getElementById('vesselName').value;
+            const categoryInput = document.getElementById('vesselCategory').value;
+            const rate = parseFloat(document.getElementById('usdRate').value) || 1;
 
+            // Sefer Kabotaj ise otomatik Kategori 'cabotage' alınır
+            const category = (voyage === 'cabotage') ? 'cabotage' : categoryInput;
+
+            // Ekran Özet Alanlarını Güncelleme
             document.getElementById('dispVesselName').innerText = vesselName;
+            document.getElementById('dispIMO').innerText = imoNo;
             document.getElementById('dispGRT').innerText = grt.toLocaleString('tr-TR');
-            document.getElementById('dispDays').innerText = days;
+            document.getElementById('dispFlagVoyage').innerText = (flag === 'turkish' ? 'TR' : 'YABANCI') + ' / ' + (voyage === 'cabotage' ? 'KABOTAJ' : 'YURTDIŞI');
+            document.getElementById('dispDangerous').innerText = isDangerous ? 'EVET (+ZAM)' : 'HAYIR';
             document.getElementById('dispRate').innerText = rate.toFixed(2);
 
             let tableRows = [];
@@ -327,91 +360,107 @@
 
             const addBlocks = Math.ceil(Math.max(0, grt - 1000) / 1000);
 
-            // YÖNERGE TEHLİKELİ YÜK ZAM ORANI
-            // Ro-Ro / Ro-Pax / Yolcu Gemileri: %20 zam (1.20)
-            // Diğer Gemiler / Tanker / Kuru Yük: %30 zam (1.30)
+            // Tehlikeli Yük Zam Oranı (Yönerge)
             let dangerousMultiplier = 1.0;
             if (isDangerous) {
                 dangerousMultiplier = (category === 'roro') ? 1.20 : 1.30;
             }
 
-            // 1. GÜNLÜK BARINMA
-            if (document.getElementById('enableBerthing').checked) {
-                let unitBerthingFee = getDailyBerthingFee(grt, berthingStatus);
-                let totalBerthingCost = unitBerthingFee * days;
+            // --- 1. BARINMA HESABI (GÜN X BİRİM FİYAT) ---
+            const stayDays = parseFloat(document.getElementById('stayDays').value) || 0;
+            document.getElementById('dispDays').innerText = stayDays;
+
+            if (document.getElementById('enableBerthing').checked && stayDays > 0) {
+                let unitBerthingFee = getDailyBerthingFee(grt, flag, voyage);
+                let totalBerthingCost = unitBerthingFee * stayDays;
 
                 totalUSD += totalBerthingCost;
                 tableRows.push({
-                    name: "Günlük Barınma Ücreti",
-                    desc: `${days} Gün x $${unitBerthingFee.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
+                    name: "Günlük Barınma Hizmeti",
+                    basis: "Günlük Tavan Tarife",
+                    formula: `${stayDays} Gün x $${unitBerthingFee.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
                     cost: totalBerthingCost
                 });
             }
 
-            // 2. KILAVUZLUK
+            // --- 2. KILAVUZLUK HESABI (GİRİŞ + ÇIKIŞ ADET X BİRİM FİYAT) ---
             if (document.getElementById('enablePilotage').checked) {
-                const ops = parseInt(document.getElementById('pilotOperations').value);
+                const pIn = parseInt(document.getElementById('pilotIn').value) || 0;
+                const pOut = parseInt(document.getElementById('pilotOut').value) || 0;
+                const totalPilotOps = pIn + pOut;
 
-                const pRates = TARIFF.pilotage[category];
-                let unitPilotCost = (pRates.base + (addBlocks * pRates.add)) * dangerousMultiplier;
-                let totalPilotCost = unitPilotCost * ops;
+                if (totalPilotOps > 0) {
+                    const pRates = TARIFF.pilotage[category];
+                    let unitPilotCost = (pRates.base + (addBlocks * pRates.add)) * dangerousMultiplier;
+                    let totalPilotCost = unitPilotCost * totalPilotOps;
 
-                totalUSD += totalPilotCost;
-                tableRows.push({
-                    name: `Kılavuzluk Hizmeti ${isDangerous ? '(Tehlikeli Yük Zamlı)' : ''}`,
-                    desc: `${ops} Operasyon x $${unitPilotCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
-                    cost: totalPilotCost
-                });
+                    totalUSD += totalPilotCost;
+                    tableRows.push({
+                        name: `Kılavuzluk Hizmeti ${isDangerous ? '(Tehlikeli Zamlı)' : ''}`,
+                        basis: `${pIn} Giriş + ${pOut} Çıkış`,
+                        formula: `${totalPilotOps} Adet x $${unitPilotCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
+                        cost: totalPilotCost
+                    });
+                }
             }
 
-            // 3. RÖMORKÖR
+            // --- 3. RÖMORKÖR HESABI (GİRİŞ + ÇIKIŞ ADET X BİRİM FİYAT) ---
             if (document.getElementById('enableTug').checked) {
-                const tugCount = parseInt(document.getElementById('tugCount').value);
-                const tugMoves = parseInt(document.getElementById('tugMoves').value);
-                const totalTugServices = tugCount * tugMoves;
+                const tIn = parseInt(document.getElementById('tugIn').value) || 0;
+                const tOut = parseInt(document.getElementById('tugOut').value) || 0;
+                const totalTugServices = tIn + tOut;
 
-                const tRates = TARIFF.tug[category];
-                let unitTugCost = (tRates.base + (addBlocks * tRates.add)) * dangerousMultiplier;
-                let totalTugCost = unitTugCost * totalTugServices;
+                if (totalTugServices > 0) {
+                    const tRates = TARIFF.tug[category];
+                    let unitTugCost = (tRates.base + (addBlocks * tRates.add)) * dangerousMultiplier;
+                    let totalTugCost = unitTugCost * totalTugServices;
 
-                totalUSD += totalTugCost;
-                tableRows.push({
-                    name: `Römorkörcülük Hizmeti ${isDangerous ? '(Tehlikeli Yük Zamlı)' : ''}`,
-                    desc: `${totalTugServices} Hizmet x $${unitTugCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
-                    cost: totalTugCost
-                });
+                    totalUSD += totalTugCost;
+                    tableRows.push({
+                        name: `Römorkörcülük Hizmeti ${isDangerous ? '(Tehlikeli Zamlı)' : ''}`,
+                        basis: `${tIn} Giriş + ${tOut} Çıkış Römorkör`,
+                        formula: `${totalTugServices} Adet x $${unitTugCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
+                        cost: totalTugCost
+                    });
+                }
             }
 
-            // 4. PALAMAR
+            // --- 4. PALAMAR HESABI (GİRİŞ + ÇIKIŞ ADET X BİRİM FİYAT) ---
             if (document.getElementById('enableMooring').checked) {
-                const mooringOps = parseInt(document.getElementById('mooringType').value);
+                const mIn = parseInt(document.getElementById('mooringIn').value) || 0;
+                const mOut = parseInt(document.getElementById('mooringOut').value) || 0;
+                const totalMooringOps = mIn + mOut;
 
-                const mRates = TARIFF.mooring[category] || TARIFF.mooring['other'];
-                let unitMooringCost = (mRates.base + (addBlocks * mRates.add)) * dangerousMultiplier;
-                let totalMooringCost = unitMooringCost * mooringOps;
+                if (totalMooringOps > 0) {
+                    const mRates = TARIFF.mooring[category] || TARIFF.mooring['other'];
+                    let unitMooringCost = (mRates.base + (addBlocks * mRates.add)) * dangerousMultiplier;
+                    let totalMooringCost = unitMooringCost * totalMooringOps;
 
-                totalUSD += totalMooringCost;
-                tableRows.push({
-                    name: `Palamar Hizmeti ${isDangerous ? '(Tehlikeli Yük Zamlı)' : ''}`,
-                    desc: `${mooringOps} Operasyon x $${unitMooringCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
-                    cost: totalMooringCost
-                });
+                    totalUSD += totalMooringCost;
+                    tableRows.push({
+                        name: `Palamar Hizmeti (Mooring) ${isDangerous ? '(Tehlikeli Zamlı)' : ''}`,
+                        basis: `${mIn} Bağlama + ${mOut} Çözme`,
+                        formula: `${totalMooringOps} Adet x $${unitMooringCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
+                        cost: totalMooringCost
+                    });
+                }
             }
 
-            // Tabloyu Oluşturma
+            // Tabloyu DOM'a Yazdırma
             const tbody = document.getElementById('pdaTableBody');
             tbody.innerHTML = '';
             tableRows.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="p-3 text-slate-800 font-semibold">${row.name}</td>
-                    <td class="p-3 text-center text-slate-600 font-bold">${row.desc}</td>
+                    <td class="p-3 text-center text-slate-500">${row.basis}</td>
+                    <td class="p-3 text-center text-slate-700 font-bold">${row.formula}</td>
                     <td class="p-3 text-right font-extrabold text-slate-900">$${row.cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            // Toplamlar
+            // Alt Toplamlar
             const agencyFee = totalUSD * 0.05;
             const grandTotalUSD = totalUSD + agencyFee;
             const grandTotalTRY = grandTotalUSD * rate;
@@ -422,7 +471,7 @@
             document.getElementById('grandTotalTRY').innerText = '₺' + grandTotalTRY.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }
 
-        // İlk Çalıştırma
+        // Sayfa Yüklendiğinde Otomatik Çalıştır
         calculatePDA();
     </script>
 </body>
