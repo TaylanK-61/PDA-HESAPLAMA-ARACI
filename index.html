@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liman PDA Hesaplama Portalı | Atık Hizmetleri Entegreli</title>
+    <title>Liman PDA Hesaplama Portalı</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -25,7 +25,7 @@
                 <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30">⚓</div>
                 <div>
                     <h1 class="text-base font-bold text-white tracking-tight">PORT DISBURSEMENT ACCOUNT (PDA)</h1>
-                    <p class="text-xs text-indigo-400 font-medium">Atık Alma Tarifesi Entegreli Sürüm</p>
+                    <p class="text-xs text-indigo-400 font-medium">Atık Tarifesi & Otomatik Bayrak/Sefer Kuralı</p>
                 </div>
             </div>
             <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 flex items-center space-x-2 transition-all">
@@ -77,8 +77,20 @@
                     <div><label class="block text-xs font-semibold text-slate-300 mb-1.5">USD/TRY (TCMB Alış)</label><input type="number" id="usdRate" step="0.0001" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-emerald-400 focus:outline-none"></div>
                 </div>
 
-                <div><label class="block text-xs font-semibold text-slate-300 mb-1.5">Bayrak Statüsü</label><select id="flagType" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none"><option value="turkish">Türk Bayrak (%20 İndirim)</option><option value="foreign">Yabancı Bayrak</option></select></div>
-                <div><label class="block text-xs font-semibold text-slate-300 mb-1.5">Sefer Türü</label><select id="voyageType" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none"><option value="intl">Yurtdışı (Uluslararası Sefer)</option><option value="cabotage">Kabotaj Hattı</option></select></div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Bayrak Statüsü</label>
+                    <select id="flagType" onchange="handleFlagChange()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                        <option value="turkish">Türk Bayrak (%20 İndirim Potansiyeli)</option>
+                        <option value="foreign">Yabancı Bayrak</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Sefer Türü</label>
+                    <select id="voyageType" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                        <option value="intl">Yurtdışı (Uluslararası Sefer)</option>
+                        <option value="cabotage" id="cabotageOption">Kabotaj Hattı</option>
+                    </select>
+                </div>
                 <div><label class="block text-xs font-semibold text-slate-300 mb-1.5">Tehlikeli Yük Durumu</label><select id="dangerousCargo" onchange="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none"><option value="no">Hayır (Standart Yük)</option><option value="yes" selected>Evet (Tehlikeli Yük / IMDG)</option></select></div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Tipi</label>
@@ -134,36 +146,36 @@
                     </div>
                 </div>
 
-                <!-- GEMİDEN ATIK ALMA HİZMETİ (TABLOYA GÖRE) -->
+                <!-- GEMİDEN ATIK ALMA HİZMETİ -->
                 <div class="bg-cyan-950/20 border border-cyan-500/30 rounded-xl p-4 space-y-4">
                     <div class="flex items-center justify-between border-b border-cyan-900/50 pb-2">
                         <div class="flex items-center gap-3">
                             <input type="checkbox" id="enableWaste" checked onchange="calculatePDA()" class="w-5 h-5 accent-cyan-500 rounded cursor-pointer">
-                            <span class="text-sm font-bold text-cyan-300">Gemiden Atık Alma Hizmeti (Bakanlık Standart Tarifesi)[span_3](start_span)[span_3](end_span)</span>
+                            <span class="text-sm font-bold text-cyan-300">Gemiden Atık Alma Hizmeti (Bakanlık Standart Tarifesi)</span>
                         </div>
-                        <span class="text-[11px] text-cyan-400 bg-cyan-950 px-2 py-1 rounded">Sabit Ücret + İlave M3 Tarifesi[span_4](start_span)[span_4](end_span)</span>
+                        <span class="text-[11px] text-cyan-400 bg-cyan-950 px-2 py-1 rounded">Sabit Ücret + İlave M3 Tarifesi</span>
                     </div>
 
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
                         <div>
                             <label class="block text-slate-300 mb-1">Slop / Balast M3</label>
                             <input type="number" id="wasteSlop" value="0" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €1.50 / M3[span_5](start_span)[span_5](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €1.50 / M3</span>
                         </div>
                         <div>
                             <label class="block text-slate-300 mb-1">Slaç / Yağ M3</label>
                             <input type="number" id="wasteSludge" value="1.5" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €35.00 / M3[span_6](start_span)[span_6](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €35.00 / M3</span>
                         </div>
                         <div>
                             <label class="block text-slate-300 mb-1">Pis Su M3</label>
                             <input type="number" id="wasteSewage" value="2.0" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €15.00 / M3[span_7](start_span)[span_7](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €15.00 / M3</span>
                         </div>
                         <div>
                             <label class="block text-slate-300 mb-1">Katı Atık M3</label>
                             <input type="number" id="wasteGarbage" value="1.0" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €25.00 / M3[span_8](start_span)[span_8](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €25.00 / M3</span>
                         </div>
                     </div>
                 </div>
@@ -223,7 +235,7 @@
             </div>
             
             <div class="mt-6 text-[10px] text-slate-400 border-t border-slate-100 pt-3 leading-relaxed">
-                * Kılavuzluk, römorkör, palamar, barınma ve gemilerden atık alma (Bakanlık standart tarifesi ve sabit ücrete dahil miktarlar aşım matrisi) hesaplamalarına tam uygundur[span_9](start_span)[span_9](end_span). EUR bazlı atık ücretleri o anki TCMB USD/EUR paritesi veya kur oranlarıyla USD'ye çevrilerek yeknekselleştirilmiştir.
+                * Kılavuzluk, römorkör, palamar, barınma ve gemilerden atık alma hesaplamalarına tam uygundur. Yabancı bayraklı gemiler için sefer türü otomatik olarak yurtdışı olarak sabitlenmektedir.
             </div>
         </section>
     </main>
@@ -240,6 +252,7 @@
             document.getElementById('exitDate').value = tomorrow.toISOString().split('T')[0];
 
             fetchTCMBRate();
+            handleFlagChange();
         }
 
         async function fetchTCMBRate() {
@@ -263,13 +276,30 @@
             }
         }
 
+        function handleFlagChange() {
+            const flag = document.getElementById('flagType').value;
+            const voyageSelect = document.getElementById('voyageType');
+            const cabotageOpt = document.getElementById('cabotageOption');
+
+            if (flag === 'foreign') {
+                voyageSelect.value = 'intl';
+                cabotageOpt.disabled = true;
+                cabotageOpt.text = "Kabotaj Hattı (Yabancı Bayrak İçin Geçersiz)";
+                voyageSelect.classList.add('opacity-70', 'cursor-not-allowed');
+            } else {
+                cabotageOpt.disabled = false;
+                cabotageOpt.text = "Kabotaj Hattı";
+                voyageSelect.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+            calculatePDA();
+        }
+
         const TARIFF = {
             pilotage: { cabotage: {base: 71.87, add: 25.67}, roro: {base: 119.10, add: 47.23}, container: {base: 157.10, add: 66.74}, other: {base: 202.27, add: 83.17} },
             tug: { cabotage: {base: 122.18, add: 25.67}, roro: {base: 230.00, add: 41.07}, container: {base: 307.01, add: 57.50}, other: {base: 382.99, add: 71.87} },
             mooring: { cabotage: {base: 11.29, add: 6.16}, other: {base: 22.58, add: 11.29}, roro: {base: 22.58, add: 11.29}, container: {base: 22.58, add: 11.29} }
         };
 
-        // Bakanlık Atık Alma Tarifesi Tablosu Verileri (Görselden birebir aktarıldı)[span_10](start_span)[span_10](end_span)
         const WASTE_TARIFF = [
             { maxGrts: 1000,   fixed: 80,  sludgeInc: 1,  sewageInc: 2, garbageInc: 1 },
             { maxGrts: 5000,   fixed: 140, sludgeInc: 3,  sewageInc: 2, garbageInc: 1 },
@@ -340,7 +370,7 @@
             const exitRule = { mult: 1.0 + ((Math.max(...sArr2) - Math.max(...dArr2)) / 100), diff: Math.max(...sArr2) - Math.max(...dArr2) };
 
             let noteHTML = `<div class="font-bold text-white mb-2">🔍 KRP Yönergesi & Atık Alma Tarifesi Entegrasyonu</div>`;
-            noteHTML += `<div class="text-[11px] text-indigo-200">Giriş/Çıkış mahsuplaşma kuralları ve Gros tonaja (<b class="text-white">${grt} GT</b>) ait Bakanlık Atık Kademeleri aktif olarak uygulanmaktadır[span_11](start_span)[span_11](end_span).</div>`;
+            noteHTML += `<div class="text-[11px] text-indigo-200">Giriş/Çıkış mahsuplaşma kuralları ve Gros tonaja (<b class="text-white">${grt} GT</b>) ait Bakanlık Atık Kademeleri aktif olarak uygulanmaktadır.</div>`;
             document.getElementById('dynamicRulesNote').innerHTML = noteHTML;
 
             document.getElementById('dispVesselName').innerText = vesselName;
@@ -360,7 +390,6 @@
             let totalUSD = 0;
             const addBlocks = Math.ceil(Math.max(0, grt - 1000) / 1000);
 
-            // 1. BARINMA
             if (document.getElementById('enableBerthing').checked && stayDays > 0) {
                 let baseUSD = grt <= 500 ? 10 : Math.ceil(grt / 1000) * 25;
                 let unitBerthingFee = baseUSD;
@@ -395,13 +424,10 @@
                 addServiceRow("Palamar (Mooring)", pRates.base, pRates.add, parseInt(document.getElementById('mooringIn').value)||0, parseInt(document.getElementById('mooringOut').value)||0);
             }
 
-            // 5. GEMİDEN ATIK ALMA HİZMETİ (TABLO HESABI)[span_12](start_span)[span_12](end_span)
             if (document.getElementById('enableWaste').checked) {
                 const tier = getWasteTier(grt);
-                // EUR -> USD dönüşüm için yaklaşık 1 EUR = 1.08 USD varsayımı veya direkt EUR tutarını USD hanesine yazma (Parite yaklaşık 1 EUR = 1.08 USD alınabilir veya EUR simgesiyle gösterilir)
                 const eurToUsd = 1.08; 
 
-                // Sabit Ücret
                 let wasteCostUSD = tier.fixed * eurToUsd;
                 totalUSD += wasteCostUSD;
                 tableRows.push({
@@ -411,20 +437,17 @@
                     cost: wasteCostUSD
                 });
 
-                // 2. Kısım İlave Atık Kontrolleri (Aşan miktar * Birim Fiyat)[span_13](start_span)[span_13](end_span)
                 const slopM3 = parseFloat(document.getElementById('wasteSlop').value) || 0;
                 const sludgeM3 = parseFloat(document.getElementById('wasteSludge').value) || 0;
                 const sewageM3 = parseFloat(document.getElementById('wasteSewage').value) || 0;
                 const garbageM3 = parseFloat(document.getElementById('wasteGarbage').value) || 0;
 
-                // Slop / Balast (€1.50 / M3 - Sabite dahil miktar tabloda yok, direkt M3 çarpılır)[span_14](start_span)[span_14](end_span)
                 if(slopM3 > 0) {
                     let c = slopM3 * 1.50 * eurToUsd;
                     totalUSD += c;
                     tableRows.push({ name: `Atık Alma (İlave Slop/Balast)`, basis: `2. Kısım Birim`, formula: `${slopM3} M3 x €1.50`, cost: c });
                 }
 
-                // Slaç / Yağ (Sabite dahil miktarı aşan kısım * €35.00)[span_15](start_span)[span_15](end_span)
                 let extraSludge = Math.max(0, sludgeM3 - tier.sludgeInc);
                 if(extraSludge > 0) {
                     let c = extraSludge * 35.00 * eurToUsd;
@@ -432,7 +455,6 @@
                     tableRows.push({ name: `Atık Alma (İlave Slaç/Yağ)`, basis: `Dahil: ${tier.sludgeInc} M3 aşımı`, formula: `${extraSludge} M3 x €35.00`, cost: c });
                 }
 
-                // Pis Su (Sabite dahil miktarı aşan kısım * €15.00)[span_16](start_span)[span_16](end_span)
                 let extraSewage = Math.max(0, sewageM3 - tier.sewageInc);
                 if(extraSewage > 0) {
                     let c = extraSewage * 15.00 * eurToUsd;
@@ -440,7 +462,6 @@
                     tableRows.push({ name: `Atık Alma (İlave Pis Su)`, basis: `Dahil: ${tier.sewageInc} M3 aşımı`, formula: `${extraSewage} M3 x €15.00`, cost: c });
                 }
 
-                // Katı Atık (Sabite dahil miktarı aşan kısım * €25.00)[span_17](start_span)[span_17](end_span)
                 let extraGarbage = Math.max(0, garbageM3 - tier.garbageInc);
                 if(extraGarbage > 0) {
                     let c = extraGarbage * 25.00 * eurToUsd;
