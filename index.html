@@ -254,8 +254,15 @@
                     <span>Hizmetler Ara Toplamı (USD):</span>
                     <span class="font-bold text-slate-900 text-sm" id="subTotalUSD">$0.00</span>
                 </div>
-                <div class="flex justify-between text-xs font-semibold text-slate-600">
-                    <span>Liman Ajanlık / Fuzuli Harçlar (Tahmini %5):</span>
+                <!-- Düzenlenebilir Beklenmeyen Giderler Satırı -->
+                <div class="flex items-center justify-between text-xs font-semibold text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <span>Beklenmeyen Giderler Payı:</span>
+                        <div class="flex items-center gap-1">
+                            <input type="number" id="contingencyPercent" value="5" step="0.5" min="0" oninput="calculatePDA()" class="w-16 bg-white border border-slate-300 rounded px-2 py-1 text-center font-bold text-slate-900 text-xs">
+                            <span class="text-slate-500 font-bold">%</span>
+                        </div>
+                    </div>
                     <span class="font-bold text-slate-900 text-sm" id="agencyFeeUSD">$0.00</span>
                 </div>
                 <div class="flex justify-between text-lg font-black text-slate-900 border-t border-slate-200 pt-3">
@@ -269,13 +276,16 @@
             </div>
             
             <div class="mt-6 text-[10px] text-slate-400 border-t border-slate-100 pt-3 leading-relaxed">
-                * Kılavuzluk, römorkör, palamar, barınma, atık alma ve seçilen ek liman hizmetleri Martaş Limanı güncel tarifesine uygun olarak hesaplanmıştır.
+                * Kılavuzluk, römorkör, palamar, barınma, atık alma ve seçilen ek liman hizmetleri Martaş Limanı güncel tarifesine uygun olarak hesaplanmıştır[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).
             </div>
         </section>
     </main>
 
     <script>
         document.getElementById('pdaDate').innerText = 'Tarih: ' + new Date().toLocaleDateString('tr-TR');
+
+        // Dinamik Euro / Dolar Paritesi Değişkeni (Canlı Kur Çekilemezse Varsayılan Güncel Piyasa Paritesi)
+        let liveEurToUsd = 1.1203;
 
         const PORT_SERVICES_DB = {
             servis_bot: { name: "Servis Botu Hizmeti (Martaş Demir Sahası)", price: 350, unit: "Sefer" },
@@ -308,8 +318,46 @@
             document.getElementById('exitDate').value = tomorrow.toISOString().split('T')[0];
 
             renderPortServicesUI();
-            fetchTCMBRate();
+            fetchTCMBRates();
             handleFlagChange();
+        }
+
+        // TCMB Kurlarını ve Canlı EUR/USD Paritesini Çekme
+        async function fetchTCMBRates() {
+            try {
+                const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.tcmb.gov.tr/kurlar/bugun.xml')}`);
+                const data = await res.json();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data.contents, "application/xml");
+                
+                const currencies = xml.getElementsByTagName("Currency");
+                let usdBuying = null;
+                let eurBuying = null;
+
+                for (let curr of currencies) {
+                    if (curr.getAttribute("CurrencyCode") === "USD") {
+                        usdBuying = parseFloat(curr.getElementsByTagName("ForexBuying")[0].textContent);
+                    }
+                    if (curr.getAttribute("CurrencyCode") === "EUR") {
+                        eurBuying = parseFloat(curr.getElementsByTagName("ForexBuying")[0].textContent);
+                    }
+                }
+
+                if(usdBuying) {
+                    document.getElementById('usdRate').value = usdBuying.toFixed(4);
+                    document.getElementById('tcmbStatus').innerHTML = "TCMB Kurları Canlı Çekildi ✓";
+                    document.getElementById('tcmbStatus').className = "text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-semibold";
+                }
+
+                if(eurBuying && usdBuying) {
+                    liveEurToUsd = eurBuying / usdBuying; // Güncel Parite Hesaplaması
+                }
+                calculatePDA();
+            } catch (err) {
+                document.getElementById('tcmbStatus').innerHTML = "TCMB Kuru Alınamadı, Manuel Girin ⚠";
+                document.getElementById('tcmbStatus').className = "text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-1 rounded-full font-semibold";
+                calculatePDA();
+            }
         }
 
         function addPortService() {
@@ -378,27 +426,6 @@
             activeCustomPortServices.splice(index, 1);
             renderPortServicesUI();
             calculatePDA();
-        }
-
-        async function fetchTCMBRate() {
-            try {
-                const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.tcmb.gov.tr/kurlar/bugun.xml')}`);
-                const data = await res.json();
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data.contents, "application/xml");
-                const usdNode = Array.from(xml.getElementsByTagName("Currency")).find(c => c.getAttribute("CurrencyCode") === "USD");
-                if(usdNode) {
-                    const forexBuying = usdNode.getElementsByTagName("ForexBuying")[0].textContent;
-                    document.getElementById('usdRate').value = parseFloat(forexBuying).toFixed(4);
-                    document.getElementById('tcmbStatus').innerHTML = "TCMB Alış Kuru Canlı Çekildi ✓";
-                    document.getElementById('tcmbStatus').className = "text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-semibold";
-                    calculatePDA(); 
-                }
-            } catch (err) {
-                document.getElementById('tcmbStatus').innerHTML = "TCMB Kuru Alınamadı, Manuel Girin ⚠";
-                document.getElementById('tcmbStatus').className = "text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-1 rounded-full font-semibold";
-                calculatePDA();
-            }
         }
 
         function handleFlagChange() {
@@ -551,7 +578,7 @@
 
             if (document.getElementById('enableWaste').checked) {
                 const tier = getWasteTier(grt);
-                const eurToUsd = 1.08; 
+                const eurToUsd = liveEurToUsd; // Güncel Canlı Parite Kullanımı
 
                 let wasteCostUSD = tier.fixed * eurToUsd;
                 totalUSD += wasteCostUSD;
@@ -630,12 +657,14 @@
                 tbody.appendChild(tr);
             });
 
-            const agencyFee = totalUSD * 0.05;
-            const grandTotalUSD = totalUSD + agencyFee;
+            // Düzenlenebilir Beklenmeyen Giderler Hesaplaması
+            const contingencyPercent = parseFloat(document.getElementById('contingencyPercent').value) || 0;
+            const contingencyFee = totalUSD * (contingencyPercent / 100);
+            const grandTotalUSD = totalUSD + contingencyFee;
             const grandTotalTRY = grandTotalUSD * rate;
 
             document.getElementById('subTotalUSD').innerText = '$' + totalUSD.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('agencyFeeUSD').innerText = '$' + agencyFee.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('agencyFeeUSD').innerText = '$' + contingencyFee.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             document.getElementById('grandTotalUSD').innerText = '$' + grandTotalUSD.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             document.getElementById('dispRate').innerText = rate.toFixed(4);
             document.getElementById('grandTotalTRY').innerText = '₺' + grandTotalTRY.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
