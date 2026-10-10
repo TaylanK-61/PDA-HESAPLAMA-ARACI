@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liman PDA Hesaplama Portalı | Kapsamlı Liman Hizmetleri</title>
+    <title>Liman PDA Hesaplama Portalı</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -105,7 +105,7 @@
             <div id="dynamicRulesNote" class="mt-5 p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-lg text-xs leading-relaxed text-indigo-200"></div>
         </section>
 
-        <!-- 2. ORTA KISIM: HİZMETLER, ATIK VE LİMAN HİZMETLERİ SEÇİMİ -->
+        <!-- 2. ORTA KISIM: HİZMETLER, ATIK VE LİMAN HİZMETLERİ -->
         <section class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-xl shadow-2xl space-y-6 no-print">
             <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
                 <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
@@ -151,57 +151,57 @@
                     <div class="flex items-center justify-between border-b border-cyan-900/50 pb-2">
                         <div class="flex items-center gap-3">
                             <input type="checkbox" id="enableWaste" checked onchange="calculatePDA()" class="w-5 h-5 accent-cyan-500 rounded cursor-pointer">
-                            <span class="text-sm font-bold text-cyan-300">Gemiden Atık Alma Hizmeti (Bakanlık Standart Tarifesi)[span_2](start_span)[span_2](end_span)</span>
+                            <span class="text-sm font-bold text-cyan-300">Gemiden Atık Alma Hizmeti (Bakanlık Standart Tarifesi)</span>
                         </div>
-                        <span class="text-[11px] text-cyan-400 bg-cyan-950 px-2 py-1 rounded">Sabit Ücret + İlave M3 Tarifesi[span_3](start_span)[span_3](end_span)</span>
+                        <span class="text-[11px] text-cyan-400 bg-cyan-950 px-2 py-1 rounded">Sabit Ücret + İlave M3 Tarifesi</span>
                     </div>
 
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
                         <div>
                             <label class="block text-slate-300 mb-1">Slop / Balast M3</label>
                             <input type="number" id="wasteSlop" value="0" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €1.50 / M3[span_4](start_span)[span_4](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €1.50 / M3</span>
                         </div>
                         <div>
                             <label class="block text-slate-300 mb-1">Slaç / Yağ M3</label>
                             <input type="number" id="wasteSludge" value="1.5" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €35.00 / M3[span_5](start_span)[span_5](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €35.00 / M3</span>
                         </div>
                         <div>
                             <label class="block text-slate-300 mb-1">Pis Su M3</label>
                             <input type="number" id="wasteSewage" value="2.0" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €15.00 / M3[span_6](start_span)[span_6](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €15.00 / M3</span>
                         </div>
                         <div>
                             <label class="block text-slate-300 mb-1">Katı Atık M3</label>
                             <input type="number" id="wasteGarbage" value="1.0" min="0" step="0.5" oninput="calculatePDA()" class="w-full bg-slate-900 border border-cyan-700/50 rounded-lg p-2 font-bold text-white text-center">
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €25.00 / M3[span_7](start_span)[span_7](end_span)</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Birim: €25.00 / M3</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- YENİ: KAPSAMLI LİMAN HİZMETLERİ (SEÇEREK EKLEME) -->
+                <!-- KAPSAMLI LİMAN HİZMETLERİ (SEÇEREK EKLEME) -->
                 <div class="bg-amber-950/20 border border-amber-500/30 rounded-xl p-4 space-y-4">
                     <div class="flex items-center justify-between border-b border-amber-900/50 pb-2">
-                        <span class="text-sm font-bold text-amber-300">Liman Hizmetleri (Martaş Tarifesi Eklemeleri)[span_8](start_span)[span_8](end_span)</span>
-                        <span class="text-[11px] text-amber-400 bg-amber-950 px-2 py-1 rounded">İsteğe Bağlı Ek Hizmetler[span_9](start_span)[span_9](end_span)</span>
+                        <span class="text-sm font-bold text-amber-300">Liman Hizmetleri (Martaş Tarifesi Eklemeleri)</span>
+                        <span class="text-[11px] text-amber-400 bg-amber-950 px-2 py-1 rounded">İsteğe Bağlı Ek Hizmetler</span>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3 items-center">
                         <select id="portServiceSelector" class="w-full sm:w-2/3 bg-slate-900 border border-amber-700/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                            <option value="servis_bot">Servis Botu Hizmeti (Martaş Demir Sahası) - 350 USD / Sefer[span_10](start_span)[span_10](end_span)</option>
-                            <option value="liman_giris">Liman Giriş Ücreti (İhrakiye, Transit, Survey vb.) - 200 USD / Araç[span_11](start_span)[span_11](end_span)</option>
-                            <option value="yakit_kara">Yakıt İkmali - Kara Tankeri ile - 450 USD / Araç[span_12](start_span)[span_12](end_span)</option>
-                            <option value="yakit_deniz">Yakıt İkmali - Deniz Tankeri ile - 1.250 USD / Adet[span_13](start_span)[span_13](end_span)</option>
-                            <option value="tatli_su">Tatlı Su İkmal Hizmeti - 15 USD / M³[span_14](start_span)[span_14](end_span)</option>
-                            <option value="elektrik">Elektrik Hizmeti - 0.50 USD / kWh[span_15](start_span)[span_15](end_span)</option>
-                            <option value="elektrik_sokme">Elektrik Sökme/Takma Hizmeti - 75 USD / Hizmet Başı[span_16](start_span)[span_16](end_span)</option>
-                            <option value="dalgiclik">Dalgıçlık Hizmeti - 750 USD / Hizmet[span_17](start_span)[span_17](end_span)</option>
-                            <option value="forklift">Forklift Hizmeti (Kumanya / İkmal) - 300 USD / Hizmet[span_18](start_span)[span_18](end_span)</option>
-                            <option value="mobil_vinc">Mobil Vinç Hizmeti (Kumanya / İkmal) - 500 USD / Hizmet[span_19](start_span)[span_19](end_span)</option>
-                            <option value="sepetli_vinc">Sepetli Vinç Hizmeti - 500 USD / Vardiya[span_20](start_span)[span_20](end_span)</option>
-                            <option value="sapanci">Sapancı / İşaretçi Hizmeti - 250 USD / Vardiya / Adam[span_21](start_span)[span_21](end_span)</option>
-                            <option value="isgaliye">Fuzuli İşgaliye Bedeli (GT x 0.05 USD x Saat)[span_22](start_span)[span_22](end_span)</option>
+                            <option value="servis_bot">Servis Botu Hizmeti (Martaş Demir Sahası) - 350 USD / Sefer</option>
+                            <option value="liman_giris">Liman Giriş Ücreti (İhrakiye, Transit, Survey vb.) - 200 USD / Araç</option>
+                            <option value="yakit_kara">Yakıt İkmali - Kara Tankeri ile - 450 USD / Araç</option>
+                            <option value="yakit_deniz">Yakıt İkmali - Deniz Tankeri ile - 1.250 USD / Adet</option>
+                            <option value="tatli_su">Tatlı Su İkmal Hizmeti - 15 USD / M³</option>
+                            <option value="elektrik">Elektrik Hizmeti - 0.50 USD / kWh</option>
+                            <option value="elektrik_sokme">Elektrik Sökme/Takma Hizmeti - 75 USD / Hizmet Başı</option>
+                            <option value="dalgiclik">Dalgıçlık Hizmeti - 750 USD / Hizmet</option>
+                            <option value="forklift">Forklift Hizmeti (Kumanya / İkmal) - 300 USD / Hizmet</option>
+                            <option value="mobil_vinc">Mobil Vinç Hizmeti (Kumanya / İkmal) - 500 USD / Hizmet</option>
+                            <option value="sepetli_vinc">Sepetli Vinç Hizmeti - 500 USD / Vardiya</option>
+                            <option value="sapanci">Sapancı / İşaretçi Hizmeti - 250 USD / Vardiya / Adam</option>
+                            <option value="isgaliye">Fuzuli İşgaliye Bedeli (GT x 0.05 USD x Saat)</option>
                         </select>
                         <button onclick="addPortService()" class="w-full sm:w-1/3 bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 px-4 rounded-xl text-xs transition-all shadow-md shadow-amber-600/20">
                             + Listeye Ekle
@@ -269,7 +269,7 @@
             </div>
             
             <div class="mt-6 text-[10px] text-slate-400 border-t border-slate-100 pt-3 leading-relaxed">
-                * Kılavuzluk, römorkör, palamar, barınma, atık alma ve seçilen ek liman hizmetleri Martaş Limanı güncel tarifesine uygun olarak hesaplanmıştır[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span).
+                * Kılavuzluk, römorkör, palamar, barınma, atık alma ve seçilen ek liman hizmetleri Martaş Limanı güncel tarifesine uygun olarak hesaplanmıştır[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).
             </div>
         </section>
     </main>
@@ -277,7 +277,6 @@
     <script>
         document.getElementById('pdaDate').innerText = 'Tarih: ' + new Date().toLocaleDateString('tr-TR');
 
-        // Varsayılan Liman Hizmetleri Veri Tabanı[span_25](start_span)[span_25](end_span)
         const PORT_SERVICES_DB = {
             servis_bot: { name: "Servis Botu Hizmeti (Martaş Demir Sahası)", price: 350, unit: "Sefer" },
             liman_giris: { name: "Liman Giriş Ücreti (İhrakiye, Transit, Survey vb.)", price: 200, unit: "Araç" },
@@ -294,7 +293,6 @@
             isgaliye: { name: "Fuzuli İşgaliye Bedeli (GT x 0.05 x Saat)", price: 0, unit: "Formül" }
         };
 
-        // Kullanıcının eklediği hizmetleri tutan dizi
         let activeCustomPortServices = [
             { id: 'servis_bot', qty: 1, price: 350 },
             { id: 'tatli_su', qty: 10, price: 15 }
@@ -313,7 +311,6 @@
             handleFlagChange();
         }
 
-        // Listeye Yeni Hizmet Ekleme
         function addPortService() {
             const select = document.getElementById('portServiceSelector');
             const key = select.value;
@@ -328,7 +325,6 @@
             calculatePDA();
         }
 
-        // Eklenen Hizmetleri Arayüzde Gösterme
         function renderPortServicesUI() {
             const container = document.getElementById('addedPortServicesContainer');
             container.innerHTML = '';
@@ -482,7 +478,7 @@
             const exitRule = { mult: 1.0 + ((Math.max(...sArr2) - Math.max(...dArr2)) / 100), diff: Math.max(...sArr2) - Math.max(...dArr2) };
 
             let noteHTML = `<div class="font-bold text-white mb-2">🔍 KRP Yönergesi, Atık Alma ve Kapsamlı Liman Hizmetleri Entegrasyonu</div>`;
-            noteHTML += `<div class="text-[11px] text-indigo-200">Giriş/Çıkış operasyonları, atık kademeleri ve ek liman hizmetleri proformaya tam entegre edilmiştir[span_26](start_span)[span_26](end_span)[span_27](start_span)[span_27](end_span).</div>`;
+            noteHTML += `<div class="text-[11px] text-indigo-200">Giriş/Çıkış operasyonları, atık kademeleri ve ek liman hizmetleri proformaya tam entegre edilmiştir[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span).</div>`;
             document.getElementById('dynamicRulesNote').innerHTML = noteHTML;
 
             document.getElementById('dispVesselName').innerText = vesselName;
@@ -502,7 +498,6 @@
             let totalUSD = 0;
             const addBlocks = Math.ceil(Math.max(0, grt - 1000) / 1000);
 
-            // 1. BARINMA
             if (document.getElementById('enableBerthing').checked && stayDays > 0) {
                 let baseUSD = grt <= 500 ? 10 : Math.ceil(grt / 1000) * 25;
                 let unitBerthingFee = baseUSD;
@@ -537,7 +532,6 @@
                 addServiceRow("Palamar (Mooring)", pRates.base, pRates.add, parseInt(document.getElementById('mooringIn').value)||0, parseInt(document.getElementById('mooringOut').value)||0);
             }
 
-            // 5. ATIK HİZMETİ
             if (document.getElementById('enableWaste').checked) {
                 const tier = getWasteTier(grt);
                 const eurToUsd = 1.08; 
@@ -584,14 +578,12 @@
                 }
             }
 
-            // 6. EKLENEN KAPSAMLI LİMAN HİZMETLERİ[span_28](start_span)[span_28](end_span)
             activeCustomPortServices.forEach(serv => {
                 const info = PORT_SERVICES_DB[serv.id];
                 let cost = 0;
                 let formulaStr = "";
 
                 if(serv.id === 'isgaliye') {
-                    // Fuzuli işgaliye formülü: GT x 0.05 USD x Saat (Varsayılan kalış süresi saat cinsinden veya kalış günü * 24 saat alınabilir)
                     let totalHours = stayDays * 24;
                     cost = grt * 0.05 * totalHours;
                     formulaStr = `${grt} GT x $0.05 x ${totalHours} Saat`;
