@@ -219,22 +219,18 @@
 
         <!-- 3. ALT KISIM: PROFORMA FATURA -->
         <section class="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl card-print relative overflow-hidden">
-            <!-- Arka Plan Filigranı (Maritime Crest Watermark) -->
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06] z-0">
-                <svg class="w-[500px] h-[500px] text-slate-900" viewBox="0 0 512 512" fill="currentColor">
-                    <circle cx="256" cy="256" r="220" fill="none" stroke="currentColor" stroke-width="16"/>
-                    <path d="M256 36v440M36 256h440" stroke="currentColor" stroke-width="16" stroke-linecap="round"/>
-                    <path d="M100 100l312 312M412 100L100 412" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
-                    <circle cx="256" cy="256" r="70" fill="none" stroke="currentColor" stroke-width="16"/>
-                    <path d="M256 120c-75 0-136 61-136 136s61 136 136 136 136-61 136-136-61-136-136-136zm0 216c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z" fill="currentColor"/>
-                </svg>
+            <!-- Arka Plan Filigranı (Logo Watermark) -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05] z-0">
+                <img src="data:image/png;base64,..." alt="Watermark" class="w-[400px] h-[300px] object-contain">
             </div>
 
             <div class="relative z-10">
-                <div class="border-b border-slate-200 pb-5 mb-5 text-center">
-                    <div class="inline-block bg-indigo-50 text-indigo-700 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2">PROFORMA DISBURSEMENT ACCOUNT</div>
-                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">LİMAN MASRAF FORMU</h3>
-                    <p class="text-xs text-slate-500 font-medium mt-1" id="pdaDate"></p>
+                <!-- Yazdırma Alanı Logo Başlığı -->
+                <div class="flex flex-col items-center justify-center pb-4 mb-5 border-b border-slate-200 text-center">
+                    <img src="data:image/png;base64,..." alt="Logo" class="h-16 object-contain mb-2">
+                    <div class="inline-block bg-indigo-50 text-indigo-700 text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider mb-1">PROFORMA DISBURSEMENT ACCOUNT</div>
+                    <h3 class="text-xl font-black text-slate-900 tracking-tight">LİMAN MASRAF FORMU</h3>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5" id="pdaDate"></p>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-xs mb-6">
