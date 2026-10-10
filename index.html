@@ -221,7 +221,7 @@
         <section class="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl card-print">
             <div class="border-b border-slate-200 pb-5 mb-5 text-center">
                 <div class="inline-block bg-indigo-50 text-indigo-700 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2">PROFORMA DISBURSEMENT ACCOUNT</div>
-                <h3 class="text-2xl font-black text-slate-900 tracking-tight">LİMAN MASRAF MÜZAKERE FORMU</h3>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tight">LİMAN MASRAF FORMU</h3>
                 <p class="text-xs text-slate-500 font-medium mt-1" id="pdaDate"></p>
             </div>
 
@@ -269,7 +269,7 @@
             </div>
             
             <div class="mt-6 text-[10px] text-slate-400 border-t border-slate-100 pt-3 leading-relaxed">
-                * Kılavuzluk, römorkör, palamar, barınma, atık alma ve seçilen ek liman hizmetleri Martaş Limanı güncel tarifesine uygun olarak hesaplanmıştır[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).
+                * Kılavuzluk, römorkör, palamar, barınma, atık alma ve seçilen ek liman hizmetleri Martaş Limanı güncel tarifesine uygun olarak hesaplanmıştır.
             </div>
         </section>
     </main>
@@ -494,8 +494,8 @@
             if (isExitHol) sArr2.push(50);
             const exitRule = { mult: 1.0 + ((Math.max(...sArr2) - Math.max(...dArr2)) / 100), diff: Math.max(...sArr2) - Math.max(...dArr2) };
 
-            let noteHTML = `<div class="font-bold text-white mb-2">🔍 KRP Yönergesi, Atık Alma ve Kapsamlı Liman Hizmetleri Entegrasyonu</div>`;
-            noteHTML += `<div class="text-[11px] text-indigo-200">Giriş/Çıkış operasyonları, atık kademeleri ve ek liman hizmetleri proformaya tam entegre edilmiştir[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span).</div>`;
+            let noteHTML = `<div class="font-bold text-white mb-2">KRP Yönergesi, Atık Alma ve Kapsamlı Liman Hizmetleri Entegrasyonu</div>`;
+            noteHTML += `<div class="text-[11px] text-indigo-200">Giriş/Çıkış operasyonları, atık kademeleri ve ek liman hizmetleri proformaya tam entegre edilmiştir.</div>`;
             document.getElementById('dynamicRulesNote').innerHTML = noteHTML;
 
             document.getElementById('dispVesselName').innerText = vesselName;
