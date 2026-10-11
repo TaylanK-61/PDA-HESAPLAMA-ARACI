@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -5,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liman PDA Hesaplama Portalı</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -18,20 +21,33 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen pb-16 antialiased" onload="initApp()">
 
-    <!-- Header -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-2"></div>
+
     <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 no-print">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30">⚓</div>
                 <div>
-                    <h1 class="text-base font-bold text-white tracking-tight">PORT DISBURSEMENT ACCOUNT (PDA)</h1>
+                    <h1 class="text-base font-bold text-white tracking-tight hidden sm:block">PORT DISBURSEMENT ACCOUNT (PDA)</h1>
+                    <h1 class="text-base font-bold text-white tracking-tight sm:hidden">LİMAN PDA PORTALI</h1>
                     <p class="text-xs text-indigo-400 font-medium">Liman Hizmetleri Tarifesi & Otomatik Modül</p>
                 </div>
             </div>
-            <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 flex items-center space-x-2 transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                <span>Yazdır / PDF İndir</span>
-            </button>
+            
+            <div class="flex items-center gap-2">
+                <button onclick="shareViaWhatsApp()" class="bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white p-2 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 transition-all" title="WhatsApp ile Paylaş">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.148 1.586 5.952L.156 23.364l5.52-1.448c1.745.95 3.69 1.453 5.725 1.453 6.646 0 12.031-5.385 12.031-12.031C23.432 5.385 18.047 0 12.031 0zm3.89 17.37c-.18.508-.962.97-1.428 1.05-.466.08-1.042.238-3.415-.747-2.843-1.18-4.662-4.14-4.806-4.333-.144-.193-1.15-1.533-1.15-2.922 0-1.39.72-2.073.978-2.348.258-.275.564-.344.75-.344.187 0 .375 0 .542.008.172.008.406-.065.636.492.235.57.804 1.96.875 2.105.07.145.117.316.023.504-.094.188-.14.305-.282.465-.14.16-.29.35-.42.48-.14.132-.29.278-.13.545.16.267.71 1.165 1.52 1.887.653.582 1.343.834 1.62.966.276.132.438.11.604-.078.165-.188.718-.836.91-1.12.193-.284.385-.236.634-.143.25.093 1.576.744 1.846.88.27.136.452.203.518.318.066.115.066.666-.114 1.174z"/></svg>
+                    <span class="hidden sm:inline">Paylaş</span>
+                </button>
+                <button onclick="exportToExcel()" class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white p-2 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 flex items-center justify-center gap-2 transition-all" title="Excel'e Aktar">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="hidden sm:inline">Excel</span>
+                </button>
+                <button onclick="window.print()" class="bg-slate-700 hover:bg-slate-600 active:bg-slate-800 text-white p-2 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold shadow-lg shadow-slate-900/25 flex items-center justify-center gap-2 transition-all" title="Yazdır / PDF İndir">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span class="hidden sm:inline">Yazdır</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -72,8 +88,15 @@
                 </div>
 
                 <div class="lg:col-span-2 grid grid-cols-2 gap-4">
-                    <div class="col-span-2"><label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Adı</label><input type="text" id="vesselName" value="MV MARMARA EXPRESS" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none"></div>
-                    <div><label class="block text-xs font-semibold text-slate-300 mb-1.5">Gros Tonaj (GT)</label><input type="number" id="grt" value="8500" min="1" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-indigo-300 focus:outline-none"></div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gemi Adı</label>
+                        <input type="text" id="vesselName" list="vesselList" onchange="onVesselChange()" oninput="calculatePDA()" placeholder="Gemi Adı Giriniz (Örn: MV MARMARA)" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none uppercase placeholder:text-slate-600">
+                        <datalist id="vesselList"></datalist>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Gros Tonaj (GT)</label>
+                        <input type="number" id="grt" placeholder="Örn: 8500" min="1" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-indigo-300 focus:outline-none placeholder:text-indigo-900/50">
+                    </div>
                     <div><label class="block text-xs font-semibold text-slate-300 mb-1.5">USD/TRY (TCMB Alış)</label><input type="number" id="usdRate" step="0.0001" oninput="calculatePDA()" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-emerald-400 focus:outline-none"></div>
                 </div>
 
@@ -304,6 +327,154 @@
 
         let liveEurToUsd = 1.1203;
 
+        function showToast(msg, type = 'error') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'error' ? 'bg-rose-500' : type === 'warning' ? 'bg-amber-500' : 'bg-emerald-500';
+            const icon = type === 'error' ? '⚠️' : type === 'warning' ? '⚡' : '✅';
+            
+            toast.className = `${bgClass} text-white px-4 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-x-10 opacity-0 flex items-center gap-3 text-sm font-semibold border border-white/20 z-[999]`;
+            toast.innerHTML = `<span class="text-lg">${icon}</span><span>${msg}</span>`;
+            
+            container.appendChild(toast);
+            
+            requestAnimationFrame(() => toast.classList.remove('translate-x-10', 'opacity-0'));
+            
+            setTimeout(() => { 
+                toast.classList.add('opacity-0', 'translate-x-10'); 
+                setTimeout(() => toast.remove(), 300); 
+            }, 3500);
+        }
+
+        function loadVesselDB() {
+            const db = JSON.parse(localStorage.getItem('vesselDB') || '{}');
+            const datalist = document.getElementById('vesselList');
+            datalist.innerHTML = '';
+            Object.keys(db).forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                datalist.appendChild(opt);
+            });
+        }
+
+        function onVesselChange() {
+            const nameInput = document.getElementById('vesselName');
+            nameInput.value = nameInput.value.toUpperCase(); // Otomatik Büyük Harf
+            const name = nameInput.value;
+            const db = JSON.parse(localStorage.getItem('vesselDB') || '{}');
+            
+            if (db[name]) {
+                document.getElementById('grt').value = db[name];
+                showToast(`"${name}" GT bilgisi veritabanından yüklendi.`, "success");
+            }
+            calculatePDA();
+        }
+
+        function saveVesselToDB(name, grt) {
+            if (!name || name === '-' || !grt || grt <= 0) return;
+            const db = JSON.parse(localStorage.getItem('vesselDB') || '{}');
+            if (db[name] !== grt) {
+                db[name] = grt;
+                localStorage.setItem('vesselDB', JSON.stringify(db));
+                loadVesselDB();
+            }
+        }
+
+        function exportToExcel() {
+            const vesselName = document.getElementById('dispVesselName').innerText;
+            const gt = document.getElementById('dispGRT').innerText;
+            if(!gt || gt === '0' || gt === '-') {
+                showToast("Dışa aktarmak için geçerli bir hesaplama yapınız.", "error");
+                return;
+            }
+
+            const ws_data = [
+                ["LİMAN MASRAF FORMU (PROFORMA PDA)"],
+                [],
+                ["Gemi Adı", vesselName, "Gros Tonaj", gt],
+                ["Bayrak/Sefer", document.getElementById('dispFlagVoyage').innerText, "Tehlikeli Yük", document.getElementById('dispDangerous').innerText],
+                ["Giriş/Çıkış", document.getElementById('dispDates').innerText, "Kalış Süresi", document.getElementById('dispDays').innerText + " Gün"],
+                [],
+                ["HİZMET KALEMİ", "DETAY / KADEME", "HESAP MİKTARI / FORMÜL", "TUTAR (USD)"]
+            ];
+
+            const tbody = document.getElementById('pdaTableBody');
+            for(let tr of tbody.rows) {
+                ws_data.push([
+                    tr.cells[0].innerText, 
+                    tr.cells[1].innerText, 
+                    tr.cells[2].innerText, 
+                    parseFloat(tr.cells[3].innerText.replace('$', '').replace(/,/g, ''))
+                ]);
+            }
+
+            ws_data.push([]);
+            ws_data.push(["", "", "Ara Toplam (USD):", parseFloat(document.getElementById('subTotalUSD').innerText.replace('$', '').replace(/,/g, ''))]);
+            ws_data.push(["", "", `Beklenmeyen Giderler (%${document.getElementById('contingencyPercent').value}):`, parseFloat(document.getElementById('agencyFeeUSD').innerText.replace('$', '').replace(/,/g, ''))]);
+            ws_data.push(["", "", "GENEL TOPLAM (USD):", parseFloat(document.getElementById('grandTotalUSD').innerText.replace('$', '').replace(/,/g, ''))]);
+            ws_data.push(["", "", `Tahmini Karşılık (${document.getElementById('dispRate').innerText} TL):`, parseFloat(document.getElementById('grandTotalTRY').innerText.replace('₺', '').replace(/,/g, '').replace('.', '').replace(',', '.')) || document.getElementById('grandTotalTRY').innerText]);
+
+            const ws = XLSX.utils.aoa_to_sheet(ws_data);
+            ws['!cols'] = [{wch: 35}, {wch: 25}, {wch: 30}, {wch: 15}];
+            
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Proforma_PDA");
+            XLSX.writeFile(wb, `${vesselName.replace(/\s+/g, '_')}_PDA.xlsx`);
+            showToast("Excel dosyası başarıyla indirildi.", "success");
+        }
+
+        async function shareViaWhatsApp() {
+            const vesselName = document.getElementById('dispVesselName').innerText;
+            const gt = document.getElementById('dispGRT').innerText;
+            
+            if(!gt || gt === '0' || gt === '-') {
+                showToast("Paylaşmak için form verilerini eksiksiz doldurun.", "error");
+                return;
+            }
+
+            const element = document.querySelector('.card-print');
+            const totalUSD = document.getElementById('grandTotalUSD').innerText;
+            const totalTRY = document.getElementById('grandTotalTRY').innerText;
+            
+            const textMsg = `⚓ *Liman PDA Formu (Proforma)*\n🚢 Gemi: ${vesselName}\n⚖️ GT: ${gt}\n🗓️ Tarih: ${document.getElementById('dispDates').innerText}\n\n💵 *Genel Toplam:* ${totalUSD}\n🇹🇷 *TL Karşılığı:* ${totalTRY}\n\n_Detaylı PDA dosyası ekte yer almaktadır._`;
+
+            showToast("PDF hazırlanıyor, lütfen bekleyin...", "warning");
+
+            const opt = {
+                margin:       0.2,
+                filename:     `${vesselName.replace(/\s+/g, '_')}_PDA.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            try {
+                // PDF'i arka planda oluştur ve Blob olarak al
+                const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+                const file = new File([pdfBlob], opt.filename, { type: 'application/pdf' });
+                
+                // Modern mobil cihazlarda Web Share API kullan (Dosya ekleyebilen özellik)
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        title: 'Proforma PDA',
+                        text: textMsg,
+                        files: [file]
+                    });
+                    showToast("Paylaşım menüsü açıldı.", "success");
+                } else {
+                    throw new Error("Cihazınız doğrudan dosya paylaşımını desteklemiyor.");
+                }
+            } catch (err) {
+                console.log("Paylaşım Fallback devrede:", err);
+                // Masaüstü veya desteklenmeyen cihazlarda Fallback:
+                // PDF'i indir, sonra WhatsApp'ı sadece metin ile aç. (Güvenlik sebebiyle tarayıcılar wa.me'ye dosya enjekte edemez)
+                html2pdf().set(opt).from(element).save();
+                const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(textMsg + "\n\n*(Lütfen az önce indirilen PDF dosyasını bu mesaja manuel olarak ekleyiniz.)*")}`;
+                window.open(whatsappUrl, '_blank');
+                showToast("PDF indiriliyor. Whatsapp'a dosyayı manuel ekleyiniz.", "success");
+            }
+        }
+
         const PORT_SERVICES_DB = {
             servis_bot: { name: "Servis Botu Hizmeti (Martaş Demir Sahası)", price: 350, unit: "Sefer" },
             liman_giris: { name: "Liman Giriş Ücreti (İhrakiye, Transit, Survey vb.)", price: 200, unit: "Araç" },
@@ -334,6 +505,7 @@
             tomorrow.setDate(tomorrow.getDate() + 2);
             document.getElementById('exitDate').value = tomorrow.toISOString().split('T')[0];
 
+            loadVesselDB(); // Veritabanını Datalist'e yükle
             renderPortServicesUI();
             fetchTCMBRates();
             handleFlagChange();
@@ -496,8 +668,48 @@
         }
 
         function calculatePDA() {
-            const vesselName = document.getElementById('vesselName').value || '-';
-            const grt = parseFloat(document.getElementById('grt').value) || 0;
+            const vesselNameInput = document.getElementById('vesselName').value;
+            const vesselName = vesselNameInput ? vesselNameInput.toUpperCase() : '-';
+            const grtInput = document.getElementById('grt').value;
+            const grt = parseFloat(grtInput);
+            
+            if (!grt || grt <= 0 || isNaN(grt)) {
+                // Tabloyu sıfırla ve hata mesajı göster
+                document.getElementById('pdaTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="4" class="p-4 text-center">
+                            <div class="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-3 rounded-lg flex items-center justify-center gap-3">
+                                <span class="text-xl">⚠️</span>
+                                <span class="font-bold">Lütfen geçerli bir Gros Tonaj (GT) giriniz! Hesaba devam edilemiyor.</span>
+                            </div>
+                        </td>
+                    </tr>`;
+                document.getElementById('subTotalUSD').innerText = "$0.00";
+                document.getElementById('grandTotalUSD').innerText = "$0.00";
+                document.getElementById('grandTotalTRY').innerText = "₺0.00";
+                document.getElementById('agencyFeeUSD').innerText = "$0.00";
+                document.getElementById('dispGRT').innerText = "-";
+                document.getElementById('dispVesselName').innerText = vesselName;
+                
+                // GT kutusu tamamen boş değilse (kullanıcı 0 veya eksi değer girdiyse) uyarı ver
+                if (grtInput !== "") {
+                    showToast("Geçersiz Gros Tonaj! Lütfen 0'dan büyük bir değer girin.", "error");
+                }
+                return;
+            }
+
+            const entryStr = document.getElementById('entryDate').value;
+            const exitStr = document.getElementById('exitDate').value;
+            
+            if (entryStr && exitStr) {
+                if (new Date(exitStr) < new Date(entryStr)) {
+                    showToast("Çıkış tarihi, giriş tarihinden önce olamaz!", "error");
+                    // Çıkış tarihini giriş tarihine eşitleyerek düzelt (Tetiklenme yeniden çalışır)
+                    document.getElementById('exitDate').value = entryStr;
+                    return; 
+                }
+            }
+
             const rate = parseFloat(document.getElementById('usdRate').value) || 1;
             const flag = document.getElementById('flagType').value;
             const voyage = document.getElementById('voyageType').value;
@@ -685,7 +897,10 @@
             document.getElementById('grandTotalUSD').innerText = '$' + grandTotalUSD.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             document.getElementById('dispRate').innerText = rate.toFixed(4);
             document.getElementById('grandTotalTRY').innerText = '₺' + grandTotalTRY.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            saveVesselToDB(vesselName, grt);
         }
     </script>
 </body>
 </html>
+```
